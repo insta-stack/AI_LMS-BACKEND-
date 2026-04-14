@@ -14,33 +14,31 @@ const sql = require('./db.js');
 const app = express();
 
 // ⭐ PROPER CORS CONFIGURATION - FIXED
-const allowedOrigins = [
-  'http://localhost:3000',
-  'http://localhost:3001',
-  'http://localhost:3002',
-  'http://localhost:5173',
-  'https://ai-lms-frontend-ten.vercel.app',
-  'https://ai-lms-frontend-git-main-insta-stacks-projects.vercel.app'
-];
-
-app.use(cors({
+const corsOptions = {
   origin: function (origin, callback) {
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'http://localhost:3002',
+      'http://localhost:5173',
+      'https://ai-lms-frontend-ten.vercel.app',
+      'https://ai-lms-frontend-git-main-insta-stacks-projects.vercel.app'
+    ];
+
     if (!origin) return callback(null, true);
 
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
 
-    console.log("❌ Blocked by CORS:", origin);
-    return callback(null, false); // IMPORTANT: DO NOT throw error
+    console.log("❌ Blocked origin:", origin);
+    return callback(null, false);
   },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
-}));
+  credentials: true
+};
 
-// Handle preflight requests
-app.options('*', cors());
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 const PORT = process.env.PORT || 3001;
 
