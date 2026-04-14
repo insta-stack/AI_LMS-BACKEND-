@@ -3,7 +3,7 @@ const { ObjectId } = require('mongodb');
 const router = express.Router();
 
 // Import the MongoDB database connection
-const sql = require('../../db.js');
+const sql = require('../db.js');
 
 // Helper function to call Groq AI API
 async function generateTimetableWithAI(subjects, config) {

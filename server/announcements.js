@@ -3,7 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs-extra');
 const { ObjectId } = require('mongodb');
-const sql = require('../../db.js');
+const sql = require('../db.js');
 
 const router = express.Router();
 

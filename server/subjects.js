@@ -8,7 +8,7 @@ const pdf = require('pdf-parse');
 const router = express.Router();
 
 // Import the MongoDB database connection
-const sql = require('../../db.js');
+const sql = require('../db.js');
 
 // Initialize Gemini AI
 const genAI = new GoogleGenerativeAI('AIzaSyDkqPqcSFM88_8m9FQCSjyfAUSjYiTezhI');
