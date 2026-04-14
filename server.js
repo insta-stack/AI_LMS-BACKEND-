@@ -12,35 +12,42 @@ const sql = require('./db.js');
 
 // Create Express app
 const app = express();
+
+// ⭐ PROPER CORS CONFIGURATION - FIXED
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'http://localhost:3002',
+  'http://localhost:5173',
+  'https://ai-lms-frontend-ten.vercel.app',
+  'https://ai-lms-frontend-git-main-insta-stacks-projects.vercel.app'
+];
+
 app.use(cors({
-  origin: [
-    "http://localhost:3000",
-    "origin.endsWith('.vercel.app')"
-  ],
-  methods: ["GET","POST","PUT","DELETE","OPTIONS"],
-  credentials: true
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  optionsSuccessStatus: 200,
+  maxAge: 86400 // 24 hours
 }));
+
+// Handle preflight requests
 app.options('*', cors());
+
 const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(morgan('dev')); // Request logging
-app.use(express.json()); // Parse JSON bodies
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
-
-// CORS configuration - allow specific origins
-const corsOptions = {
-  origin: [
-    'http://localhost:3000',
-    'http://localhost:3001', 
-    'http://localhost:3002',
-   "http://localhost:3000",
-  "https://ai-lms-frontend-git-main-insta-stacks-projects.vercel.app"
-  ],
-  credentials: true,
-  optionsSuccessStatus: 200
-};
-app.options("*", cors());
+app.use(express.json({ limit: '50mb' })); // Parse JSON bodies
+app.use(express.urlencoded({ extended: true, limit: '50mb' })); // Parse URL-encoded bodies
 
 // Static files
 app.use(express.static('public'));
@@ -1225,9 +1232,11 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`📱 Admin Dashboard:`);
   console.log(`   Localhost: http://localhost:3000/dashboard/admin`);
   console.log(`   Network:   http://${localIP}:3000/dashboard/admin`);
+  console.log('');
+  console.log(`🔒 CORS ENABLED for:`);
+  allowedOrigins.forEach(origin => console.log(`   ✅ ${origin}`));
 }).on('error', (err) => {
   console.error('❌ Server failed to start:', err);
 });
 
 module.exports = app;
-
