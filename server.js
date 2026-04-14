@@ -38,7 +38,7 @@ app.use(express.static('public'));
 app.use('/uploads', express.static('uploads')); // Serve uploaded files
 
 // Import and use announcement routes
-const announcementRoutes = require('./server/routes/announcements');
+const announcementRoutes = require('./server/announcements');
 app.use('/api/announcements', announcementRoutes);
 
 // Import Google Generative AI
@@ -56,7 +56,7 @@ let sessionTokenUsage = {
 
 // Import and use leaves routes
 try {
-  const leavesRoutes = require('./server/routes/leaves');
+  const leavesRoutes = require('./server/leaves');
   app.use('/api/leaves', leavesRoutes);
   console.log('✅ Leaves routes loaded successfully');
 } catch (error) {
@@ -65,7 +65,7 @@ try {
 
 // Import and use attendance routes
 try {
-  const attendanceRoutes = require('./server/routes/attendance');
+  const attendanceRoutes = require('./server/attendance');
   app.use('/api/attendance', attendanceRoutes);
   console.log('✅ Attendance routes loaded successfully');
 } catch (error) {
@@ -74,7 +74,7 @@ try {
 
 // Import and use subjects routes
 try {
-  const subjectsRoutes = require('./server/routes/subjects');
+  const subjectsRoutes = require('./server/subjects');
   app.use('/api/subjects', subjectsRoutes);
   console.log('✅ Subjects routes loaded successfully');
 } catch (error) {
@@ -83,7 +83,7 @@ try {
 
 // Import and use timetable routes
 try {
-  const timetableRoutes = require('./server/routes/timetable');
+  const timetableRoutes = require('./server/timetable');
   app.use('/api/timetable', timetableRoutes);
   console.log('✅ Timetable routes loaded successfully');
 } catch (error) {
@@ -92,7 +92,7 @@ try {
 
 // Import and use store routes
 try {
-  const storeRoutes = require('./server/routes/store');
+  const storeRoutes = require('./server/store');
   app.use('/api/store', storeRoutes);
   console.log('✅ Store routes loaded successfully');
 } catch (error) {
