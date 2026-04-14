@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const sql = require('../../db');
+const sql = require('../db.js');
 const { ObjectId } = require('mongodb');
 
 // Get all store items
